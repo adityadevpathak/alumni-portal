@@ -1,0 +1,44 @@
+<!-- templates/search.html -->
+{% extends "base.html" %}
+
+{% block title %}Search Alumni{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+
+    <!-- Search Form -->
+    <div class="bg-white rounded-lg shadow p-6 mb-6 max-w-2xl mx-auto">
+        <h2 class="text-2xl font-bold mb-4 text-blue-600 text-center">Search Alumni</h2>
+        <form method="POST" action="{{ url_for('search') }}" class="space-y-4">
+            <input type="text" name="name" placeholder="Search by name"
+                class="w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400">
+            <input type="text" name="batch" placeholder="Search by batch"
+                class="w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400">
+            <input type="text" name="company" placeholder="Search by company"
+                class="w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400">
+            <button type="submit"
+                class="w-full py-3 bg-blue-500 text-white font-semibold rounded hover:bg-blue-600 transition">Search</button>
+        </form>
+    </div>
+
+    <!-- Search Results -->
+    {% if results %}
+    <div class="space-y-4 max-w-3xl mx-auto">
+        <h3 class="text-xl font-bold mb-2 text-gray-700">Results ({{ results|length }})</h3>
+        {% for user in results %}
+        <div class="bg-white rounded-lg shadow p-4 hover:shadow-md transition duration-300">
+            <div class="flex justify-between items-center mb-2">
+                <h4 class="font-semibold text-lg text-gray-800">{{ user.name }}</h4>
+                <span class="text-gray-500 text-sm">Batch: {{ user.batch or 'N/A' }}</span>
+            </div>
+            <p class="text-gray-700">Company: {{ user.company or 'N/A' }}</p>
+            <p class="text-gray-700">Role: {{ user.role or 'N/A' }}</p>
+        </div>
+        {% endfor %}
+    </div>
+    {% elif results is not none %}
+    <p class="text-center text-gray-500 mt-4">No alumni found matching your search criteria.</p>
+    {% endif %}
+
+</div>
+{% endblock %}

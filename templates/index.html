@@ -1,0 +1,51 @@
+<!-- templates/index.html -->
+{% extends "base.html" %}
+ <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+
+    <!-- Welcome Banner -->
+    <div class="bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-lg p-6 mb-6 shadow-lg">
+        <h1 class="text-3xl font-bold mb-2">Welcome{% if user %}, {{ user.name }}{% endif %}!</h1>
+        <p class="text-lg">Connect with your batchmates, see updates, and stay in touch with alumni.</p>
+    </div>
+
+    <!-- Create Post Form -->
+    {% if user %}
+    <div class="bg-white rounded-lg p-6 shadow mb-6">
+        <form action="{{ url_for('create_post') }}" method="POST">
+            <textarea name="content" rows="3" placeholder="Share an update..." required
+                class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"></textarea>
+            <button type="submit"
+                class="mt-3 px-6 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition">Post</button>
+        </form>
+    </div>
+    {% else %}
+    <div class="bg-yellow-100 text-yellow-800 p-4 rounded mb-6">
+        <p>Please <a href="{{ url_for('login') }}" class="underline font-semibold">login</a> to create posts.</p>
+    </div>
+    {% endif %}
+
+    <!-- Posts Feed -->
+    <h2 class="text-2xl font-bold mb-4">Recent Updates</h2>
+    {% if posts %}
+    <div class="space-y-4">
+        {% for post in posts %}
+        <div class="bg-white rounded-lg shadow p-4 hover:shadow-md transition duration-300">
+            <div class="flex justify-between items-center mb-2">
+                <h3 class="font-semibold text-lg text-gray-800">{{ post.user.name }}</h3>
+                <span class="text-gray-500 text-sm">{{ post.timestamp.strftime('%b %d, %Y %H:%M') }}</span>
+            </div>
+            <p class="text-gray-700">{{ post.content }}</p>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <p class="text-gray-500">No posts yet. Be the first to share an update!</p>
+    {% endif %}
+
+</div>
+{% endblock %}

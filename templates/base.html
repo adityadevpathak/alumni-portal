@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Alumni{% endblock %}</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 text-gray-900">
+    <!-- Navbar -->
+    <nav class="bg-white shadow mb-6">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <a href="{{ url_for('index') }}" class="font-bold text-xl text-blue-600">AlumniPortal</a>
+            <div>
+                {% if user %}
+                <span class="mr-4">Hello, {{ user.name }}</span>
+                <a href="{{ url_for('profile') }}" class="mr-4 hover:text-blue-500">Profile</a>
+                <a href="{{ url_for('logout') }}" class="hover:text-red-500">Logout</a>
+                {% else %}
+                <a href="{{ url_for('login') }}" class="mr-4 hover:text-blue-500">Login</a>
+                <a href="{{ url_for('register') }}" class="hover:text-blue-500">Register</a>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+
+    <!-- Flash messages -->
+    <div class="container mx-auto px-4">
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+            <div class="mb-4">
+                {% for msg in messages %}
+                <div class="bg-green-100 text-green-800 p-3 rounded mb-2">{{ msg }}</div>
+                {% endfor %}
+            </div>
+            {% endif %}
+        {% endwith %}
+    </div>
+
+    <!-- Main Content -->
+    {% block content %}{% endblock %}
+</body>
+</html>

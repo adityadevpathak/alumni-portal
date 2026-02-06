@@ -1,0 +1,32 @@
+<!-- templates/profile.html -->
+{% extends "base.html" %}
+
+{% block title %}Profile{% endblock %}
+
+{% block content %}
+<div class="flex justify-center items-center min-h-screen bg-gray-100">
+    <div class="bg-white rounded-lg shadow-lg p-8 w-full max-w-md">
+        <h2 class="text-2xl font-bold mb-6 text-center text-blue-600">Your Profile</h2>
+        <form method="POST" action="{{ url_for('profile') }}">
+            <label class="block mb-2 font-medium">Name</label>
+            <input type="text" name="name" value="{{ user.name }}" required
+                class="w-full p-3 mb-4 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400">
+
+            <label class="block mb-2 font-medium">Batch</label>
+            <input type="text" name="batch" value="{{ user.batch }}"
+                class="w-full p-3 mb-4 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400">
+
+            <label class="block mb-2 font-medium">Company</label>
+            <input type="text" name="company" value="{{ user.company }}"
+                class="w-full p-3 mb-4 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400">
+
+            <label class="block mb-2 font-medium">Role</label>
+            <input type="text" name="role" value="{{ user.role }}"
+                class="w-full p-3 mb-6 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400">
+
+            <button type="submit"
+                class="w-full py-3 bg-blue-500 text-white font-semibold rounded hover:bg-blue-600 transition">Update Profile</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
