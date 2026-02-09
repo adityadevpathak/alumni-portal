@@ -196,6 +196,6 @@ def init_sample():
             return 'Sample user created: sample@example.com / password'
         return 'Database already initialized.'
 
-if __name__ == "__main__":
-    with app.app_context():
-        db.create_all()
+# ---- Render / Gunicorn startup ----
+with app.app_context():
+    db.create_all()
